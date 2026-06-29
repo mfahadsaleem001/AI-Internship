@@ -12,12 +12,12 @@ posts = [
     {
         "ID": 1,
         "Title": "AI Agents",
-        "Author": "Mr Subhan"
+        "Author": "Subhan"
     },
     {
         "ID": 2,
-        "Title": "Monotholic",
-        "Author": "Mr Afaq"
+        "Title": "Python Basics",
+        "Author": "Afaq"
     }
 ]
 
