@@ -2,12 +2,12 @@ from sklearn.tree import DecisionTreeClassifier
 
 model = DecisionTreeClassifier()
 
-X = [[2], [6], [4], [1], [3]]
+X = [[8], [6], [4], [1], [5]]
 
-y = ["Fail", "Pass", "Pass", "Fail", "Pass"]
+y = ["Pass", "Pass", "Fail", "Fail", "Pass"]
 
 model.fit(X, y)
 
-prediction = model.predict([[0]])
+prediction = model.predict([[2]])
 
 print(prediction)
