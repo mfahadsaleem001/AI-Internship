@@ -1,0 +1,6 @@
+id,post,cleaned_text,keywords,sentiment
+1,I love this AI project,"['love', 'ai', 'project']","[('love', 1), ('ai', 1), ('project', 1)]",Positive
+2,This code has many bugs,"['code', 'many', 'bugs']","[('code', 1), ('many', 1), ('bugs', 1)]",Negative
+3,Python is amazing for machine learning,"['python', 'amazing', 'machine', 'learning']","[('python', 1), ('amazing', 1), ('machine', 1), ('learning', 1)]",Positive
+4,I hate this error,"['hate', 'error']","[('hate', 1), ('error', 1)]",Positive
+5,The project is excellent,"['project', 'excellent']","[('project', 1), ('excellent', 1)]",Positive
