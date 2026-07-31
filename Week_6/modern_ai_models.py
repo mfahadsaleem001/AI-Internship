@@ -18,7 +18,7 @@ translator = pipeline(
 
 # Translate English → French
 translation = translator("Python is the best programming language.")
-print(translation)
+print(translation[0]["translation_text"])
 
 # SUMMARIZATION
 # Load Summarization Model
@@ -44,7 +44,7 @@ print("\nOriginal Article:\n")
 print(article)
 
 print("\nSummary:\n")
-print(summary)
+print(summary[0]["summary_text"])
 
 # DAY 3
 # TRANSFORMERS & EMBEDDINGS
@@ -93,3 +93,67 @@ similarity = F.cosine_similarity(
 )
 
 print(similarity)
+
+# Day 4
+# Question Answering using Transformers
+
+qa_pipeline = pipeline("question-answering")
+qa_result = qa_pipeline(
+    question="Who created Python?",
+    context="Python is a programming language created by Guido van Rossum in 1991."
+)
+
+print(qa_result["answer"])
+
+#Semantic Search using Transformers
+sentences = [
+    "I Learn Python",
+    "Artificial Intelligence is changing the world",
+    "I play cricket",
+    "I like Food",
+    "I travel to Sahiwal"
+            ]
+
+query = "Machine Learning"
+query_inputs = tokenizer(query, return_tensors="pt")
+query_outputs = model(**query_inputs)
+query_embedding = query_outputs.pooler_output
+print(query_embedding)
+
+best_score = -1
+best_sentence = ""
+
+for sentence in sentences:
+    sentence_inputs = tokenizer(sentence, return_tensors="pt")
+    sentence_outputs = model(**sentence_inputs)
+    sentence_embedding = sentence_outputs.pooler_output
+    
+    similarity = F.cosine_similarity(
+    query_embedding,
+    sentence_embedding
+    )
+    
+    print(f"{sentence} -> {similarity.item():.4f}")
+    
+    score = similarity.item()
+
+    if score > best_score:
+        best_score = score
+        best_sentence = sentence
+        
+print("\nBest Match:")
+print(best_sentence)
+
+print("\nSimilarity Score:")
+print(best_score)
+
+# Day 5
+# Text Generation
+generator = pipeline("text-generation", model="gpt2")
+
+generated_result = generator(
+    "Artificial Intelligence is transforming the future because",
+    max_new_tokens=100
+)
+
+print(generated_result[0]["generated_text"])
