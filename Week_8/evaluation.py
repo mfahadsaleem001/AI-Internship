@@ -22,6 +22,15 @@ test_vectors = vectorizer.transform(test_reviews)
 
 predictions = sentiment_model.predict(test_vectors)
 
+
+# Day 3 - Confidence Filtering
+# Topics: Prediction Probability, Confidence Score, Threshold
+
+probabilities = sentiment_model.predict_proba(test_vectors)
+
+confidence_threshold = 0.80
+low_confidence_count = 0
+
 correct = 0
 
 
@@ -31,8 +40,22 @@ correct = 0
 false_positive = 0
 false_negative = 0
 
-for review, actual, predicted in zip(test_reviews, actual_labels, predictions):
-    print(f"Review:{review}\nActual Sentiment: {actual}\nPredicted Sentiment: {predicted}")
+for review, actual, predicted, probability in zip(
+    test_reviews, actual_labels, predictions, probabilities
+):
+
+    print(
+        f"Review:{review}\n"
+        f"Actual Sentiment: {actual}\n"
+        f"Predicted Sentiment: {predicted}"
+    )
+
+    confidence = max(probability)
+    print(f"Confidence: {confidence * 100:.0f}%")
+
+    if confidence < confidence_threshold:
+        print("Low Confidence: Prediction needs review.")
+        low_confidence_count = low_confidence_count + 1
 
     result = actual == predicted
 
@@ -55,10 +78,17 @@ total = len(test_reviews)
 
 print(f"False Positives: {false_positive}")
 print(f"False Negatives: {false_negative}")
+print(f"Low Confidence Predictions: {low_confidence_count}")
+print()
 
 print("Error Analysis:")
 print("False Negative Case: 'An absolute masterpiece, would watch again.'")
 print("Reason: The model has limited positive training examples and vocabulary.")
+print()
 
 accuracy = correct / total * 100
 print(f"Accuracy: {accuracy}")
+print()
+
+print(sentiment_model.classes_)
+print(probabilities)
