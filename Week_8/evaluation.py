@@ -14,9 +14,21 @@ test_reviews = [
     "This was a terrible experience",
     "The plot was predictable and boring.",
     "An absolute masterpiece, would watch again.",
+
+    # Day 4 - Sarcasm & Ambiguous Sentiment
+    # Topics: Sarcasm Case, Ambiguous Sentiment
+    "Great, another terrible movie.",
+    "The movie was okay.",
 ]
 
-actual_labels = ["Positive", "Negative", "Negative", "Positive"]
+actual_labels = [
+    "Positive",
+    "Negative",
+    "Negative",
+    "Positive",
+    "Negative",
+    "Neutral"
+]
 
 test_vectors = vectorizer.transform(test_reviews)
 
@@ -60,11 +72,17 @@ for review, actual, predicted, probability in zip(
     result = actual == predicted
 
     if actual == "Negative" and predicted == "Positive":
-        print("False Positive: The model predicted a positive sentiment for a negative review.")
+        print(
+            "False Positive: The model predicted a positive "
+            "sentiment for a negative review."
+        )
         false_positive = false_positive + 1
 
     if actual == "Positive" and predicted == "Negative":
-        print("False Negative: The model predicted a negative sentiment for a positive review.")
+        print(
+            "False Negative: The model predicted a negative "
+            "sentiment for a positive review."
+        )
         false_negative = false_negative + 1
 
     if result:
@@ -74,21 +92,53 @@ for review, actual, predicted, probability in zip(
     print()
 
 
+# Day 4 - Sarcasm & Ambiguous Sentiment Analysis
+# Topics: Difficult Cases, Model Limitations
+
 total = len(test_reviews)
 
+incorrect = total - correct
+
+sarcasm_cases = 1
+ambiguous_cases = 1
+
+print("Error Analysis:")
+print(
+    "False Negative Case: "
+    "'An absolute masterpiece, would watch again.'"
+)
+print(
+    "Reason: The model has limited positive training "
+    "examples and vocabulary."
+)
+print()
+
+print("Sarcasm Case: 'Great, another terrible movie.'")
+print("Result: The model predicted Negative correctly.")
+print()
+
+print("Ambiguous Case: 'The movie was okay.'")
+print("Actual: Neutral")
+print("Predicted: Negative")
+print(
+    "Reason: The binary model only supports "
+    "Positive and Negative classes."
+)
+print()
+
+
+# Day 5 - Final Evaluation Summary
+# Topics: Overall Performance, Error Summary, Model Limitations
+
+accuracy = correct / total * 100
+
+print("========== FINAL EVALUATION SUMMARY ==========")
+print(f"Total Test Cases: {total}")
+print(f"Correct Predictions: {correct}")
+print(f"Incorrect Predictions: {incorrect}")
 print(f"False Positives: {false_positive}")
 print(f"False Negatives: {false_negative}")
 print(f"Low Confidence Predictions: {low_confidence_count}")
-print()
-
-print("Error Analysis:")
-print("False Negative Case: 'An absolute masterpiece, would watch again.'")
-print("Reason: The model has limited positive training examples and vocabulary.")
-print()
-
-accuracy = correct / total * 100
-print(f"Accuracy: {accuracy}")
-print()
-
-print(sentiment_model.classes_)
-print(probabilities)
+print(f"Sarcasm Cases: {sarcasm_cases}")
+print(f"Ambiguous Cases: {ambiguous_cases}")
+print(f"Final Accuracy: {accuracy:.2f}%")
