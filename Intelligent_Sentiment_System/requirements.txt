@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+requests
+beautifulsoup4
+pandas
+scikit-learn
+nltk
+sqlalchemy
+python-dotenv
+joblib
